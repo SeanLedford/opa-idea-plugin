@@ -40,6 +40,32 @@
         <lang.braceMatcher language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.typing.RegoBraceMatcher"/>
         <lang.quoteHandler language="rego" implementationClass="org.openpolicyagent.ideaplugin.ide.typing.RegoQuoteHandler"/>
 
+        <!-- LSP Features -->
+        <!-- Code Folding (LSP textDocument/foldingRange) -->
+        <lang.foldingBuilder
+            id="LSPFoldingBuilderForRego"
+            language="rego"
+            implementationClass="com.redhat.devtools.lsp4ij.features.foldingRange.LSPFoldingRangeBuilder"
+            order="first"/>
+
+        <!-- Signature Help (LSP textDocument/signatureHelp) -->
+        <codeInsight.parameterInfo
+            id="LSPParameterInfoHandlerForRego"
+            language="rego"
+            implementationClass="com.redhat.devtools.lsp4ij.features.signatureHelp.LSPParameterInfoHandler"/>
+
+        <!-- Document Symbols (LSP textDocument/documentSymbol) -->
+        <lang.psiStructureViewFactory
+            id="LSPDocumentSymbolStructureViewFactoryForRego"
+            language="rego"
+            implementationClass="com.redhat.devtools.lsp4ij.features.documentSymbol.LSPDocumentSymbolStructureViewFactory"/>
+
+        <!-- Breadcrumbs support using document symbols -->
+        <breadcrumbsInfoProvider
+            id="LSPBreadcrumbsProviderForRego"
+            implementation="com.redhat.devtools.lsp4ij.features.documentSymbol.LSPBreadcrumbsProvider"
+            order="last"/>
+
         <toolWindow id="OPA Console"
                         anchor="bottom"
                         icon="/icons/opa_13_13.svg"
@@ -53,7 +79,27 @@
                              displayName="Open Policy Agent"
                              instance="org.openpolicyagent.ideaplugin.opa.project.settings.OpaOptionsConfigurable"/>
 
-</extensions>
+        <!-- Notifications -->
+        <notificationGroup id="OPA Plugin" displayType="BALLOON" key="notification.group.opa"/>
+
+    </extensions>
+
+    <!-- LSP4IJ Language Server Integration -->
+    <extensions defaultExtensionNs="com.redhat.devtools.lsp4ij">
+        <server id="regal"
+                name="Regal Language Server"
+                factoryClass="org.openpolicyagent.ideaplugin.lsp.RegalLanguageServerFactory">
+            <description>Regal Language Server for Open Policy Agent Rego files</description>
+        </server>
+        <languageMapping language="rego" serverId="regal"/>
+
+        <!-- DAP Debug Adapter Integration -->
+        <debugAdapterServer id="regal-debug"
+                           name="Regal Debug Adapter"
+                           factoryClass="org.openpolicyagent.ideaplugin.dap.RegalDebugAdapterDescriptorFactory">
+            <description>Regal Debug Adapter for debugging Rego policies</description>
+        </debugAdapterServer>
+    </extensions>
 
     <actions>
 

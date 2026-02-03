@@ -14,6 +14,7 @@ import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 
 val platformType = prop("platformType")
 val platformVersion = prop("platformVersion")
+val verifierIdeVersion = platformVersion
 
 val psiViewerPluginVersion = prop("psiViewerPluginVersion")
 val channel = prop("publishChannel")
@@ -78,7 +79,8 @@ allprojects {
         intellijPlatform {
             create(platformType, platformVersion)
             val pluginList = mutableListOf(
-                "PsiViewer:$psiViewerPluginVersion"
+                "PsiViewer:$psiViewerPluginVersion",
+                "com.redhat.devtools.lsp4ij:0.19.1"
             )
             plugins(pluginList)
 
@@ -151,7 +153,12 @@ project(":plugin") {
         }
         pluginVerification {
             ides {
-                recommended()
+                // Use single IDE version on CI to reduce risk of running out of disk space on GHA runner
+                if (System.getenv("CI") != null) {
+                    ide(IntelliJPlatformType.IntellijIdeaUltimate, verifierIdeVersion)
+                } else {
+                    recommended()
+                }
             }
         }
         publishing {
