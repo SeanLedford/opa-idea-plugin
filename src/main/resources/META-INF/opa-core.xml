@@ -99,6 +99,11 @@
                            factoryClass="org.openpolicyagent.ideaplugin.dap.RegalDebugAdapterDescriptorFactory">
             <description>Regal Debug Adapter for debugging Rego policies</description>
         </debugAdapterServer>
+
+        <!-- Semantic Tokens (LSP textDocument/semantictokens/full) -->
+        <semanticTokensColorsProvider
+                serverId="regal"
+                class="org.openpolicyagent.ideaplugin.lsp.RegalSemanticTokensColorsProvider"/>
     </extensions>
 
     <actions>
