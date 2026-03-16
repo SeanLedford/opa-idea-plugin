@@ -4,6 +4,7 @@
   - [IDE specific features](#ide-specific-features)
 - [Lexer](#lexer)
 - [Parser](#parser)
+- [Language Server](#language-server)
 - [Useful methods](#useful-methods)
 - [Testing strategy](#testing-strategy)
   - [Tests resources](#tests-resources)
@@ -68,6 +69,11 @@
     │   │       │   ├── lexer
     │   │       │   ├── parser
     │   │       │   └── psi
+    │   │       ├── lsp # code relative to language server functionality
+    │   │       │   ├── RegalLanguageClient.kt
+    │   │       │   ├── RegalLanguageServerFactory.kt
+    │   │       │   ├── RegalSemanticTokensColorsProvider.kt
+    │   │       │   └── RegalStreamConnectionProvider.kt
     │   │       ├── opa
     │   │       │   └── tool
     │   │       └── openapiext # extension methods that could be in IDEA SDK
@@ -112,6 +118,10 @@ format. It looks like a `bnf` grammar. `Grammar kit` also generates the [PSI](ht
 Once the PSI is generated, some features like commenting code are really straightforward to implement.
 
 Code can be generated thanks to `generateRegoParser` gradle tasks.
+
+# Language Server
+The plugin also uses the [lsp4ij](https://plugins.jetbrains.com/plugin/23257-lsp4ij) library to provide support for [Regal
+language server features](https://www.openpolicyagent.org/projects/regal/language-server).
 
 # Useful methods
 Some useful extension methods has been coded under:

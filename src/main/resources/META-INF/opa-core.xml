@@ -93,6 +93,11 @@
         </server>
         <languageMapping language="rego" serverId="regal"/>
 
+        <!-- Semantic Tokens (LSP textDocument/semantictokens/full) -->
+        <semanticTokensColorsProvider
+                serverId="regal"
+                class="org.openpolicyagent.ideaplugin.lsp.RegalSemanticTokensColorsProvider"/>
+
         <!-- DAP Debug Adapter Integration -->
         <debugAdapterServer id="regal-debug"
                            name="Regal Debug Adapter"
