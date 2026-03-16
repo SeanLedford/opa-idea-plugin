@@ -69,7 +69,7 @@
     │   │       │   ├── lexer
     │   │       │   ├── parser
     │   │       │   └── psi
-    │   │       ├── lsp # code relative to language server protocol functionality
+    │   │       ├── lsp # code relative to language server functionality
     │   │       │   ├── RegalLanguageClient.kt
     │   │       │   ├── RegalLanguageServerFactory.kt
     │   │       │   ├── RegalSemanticTokensColorsProvider.kt
@@ -120,12 +120,8 @@ Once the PSI is generated, some features like commenting code are really straigh
 Code can be generated thanks to `generateRegoParser` gradle tasks.
 
 # Language Server
-The plugin also uses the [lsp4ij](https://plugins.jetbrains.com/plugin/23257-lsp4ij) library to support the following [Regal
-language server features](https://github.com/open-policy-agent/regal):
-
-* Semantic Tokens: Allows the language server to provide syntax highlighting via semantic token data being parsed 
- from the Rego AST. The lsp4ij semantic token color provider is implemented here to map the token data in the response to
- default IDEA colors.
+The plugin also uses the [lsp4ij](https://plugins.jetbrains.com/plugin/23257-lsp4ij) library to provide support for [Regal
+language server features](https://www.openpolicyagent.org/projects/regal/language-server).
 
 # Useful methods
 Some useful extension methods has been coded under:

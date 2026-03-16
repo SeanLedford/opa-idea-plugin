@@ -24,6 +24,7 @@ class RegalSemanticTokensColorsProvider : SemanticTokensColorsProvider {
         tokenModifiers: List<String>,
         file: PsiFile
     ): TextAttributesKey? = when (tokenType) {
+        // These are the only token types we support currently, may need to update these if more are supported in the future!
         "namespace" -> DefaultLanguageHighlighterColors.STRING
         "variable" -> when {
             tokenModifiers.contains("declaration") -> DefaultLanguageHighlighterColors.CONSTANT
