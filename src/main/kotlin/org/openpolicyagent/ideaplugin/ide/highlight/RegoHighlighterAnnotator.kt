@@ -21,7 +21,12 @@ class RegoHighlighterAnnotator : AnnotatorBase() {
 
     override fun annotateInternal(element: PsiElement, holder: AnnotationHolder) {
         val (style, range) = when (element) {
-            is RegoRule -> Pair(RegoColor.HEAD, element.ruleHead.`var`.textRange)
+            is RegoRule -> {
+                // After grammar update for v1 syntax, the var lives inside head-ref under either
+                // a regular rule-head or a partial-set-rule.
+                val headRef = element.ruleHead?.headRef ?: element.partialSetRule?.headRef
+                headRef?.let { Pair(RegoColor.HEAD, it.textRange) }
+            }
 
             is RegoEmptySet -> Pair(RegoColor.CALL, element.textRange)
 

@@ -31,6 +31,8 @@
         LBRACK              = '['
         RBRACK              = ']'
         ELSE                = 'else'
+        IF                  = 'if'
+        CONTAINS            = 'contains'
         LBRACE              = '{'
         RBRACE              = '}'
         SEMICOLON           = ';'
@@ -66,11 +68,13 @@
 module              ::= package (import|  rule)*
 package             ::= "package" ref
 import              ::= "import" ref ( "as" var )?
-rule                ::= "default"?  rule-head  rule-body*
-rule-head           ::= var ( "(" rule-args? ")" )? ("[" term "]" )* ( ( ":=" | "=" ) expr )?
+rule                ::= "default"? ( partial-set-rule | rule-head "if"? rule-body* )
+rule-head           ::= head-ref ( "(" rule-args? ")" )? ("[" term "]" )* ( ( ":=" | "=" ) expr )?
+head-ref            ::= var ref-arg-dot*
+partial-set-rule    ::= head-ref "contains" term ( "if"? rule-body )?
 rule-args           ::= term ( "," term )*
 rule-body           ::= else-expr  | query-block
-else-expr           ::= else (':=' | '=') expr  query-block? | else (':=' | '=')? query-block
+else-expr           ::= else (':=' | '=') expr "if"? query-block? | else (':=' | '=')? "if"? query-block
 query-block         ::= "{" query "}"
 query               ::= ( literal |';' )+
 literal             ::= ( some-decl | literal-expr | "not" literal-expr )  with-modifier*
