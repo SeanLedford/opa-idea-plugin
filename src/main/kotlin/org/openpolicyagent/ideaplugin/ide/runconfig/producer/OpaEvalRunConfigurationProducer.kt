@@ -41,7 +41,7 @@ class OpaEvalRunConfigurationProducer : LazyRunConfigurationProducer<OpaEvalRunC
         if (!regFile) return false
 
         val element = sourceElement.get()
-        if (element.parent?.parent is RegoRuleHead && element.text.startsWith(REGO_TEST_RULE_PREFIX)) return false
+        if (element.parent?.parent is RegoHeadRef && element.text.startsWith(REGO_TEST_RULE_PREFIX)) return false
         val regoPackage = element.getRegoPackage() ?: return false
 
 
@@ -62,7 +62,7 @@ class OpaEvalRunConfigurationProducer : LazyRunConfigurationProducer<OpaEvalRunC
      * </ul>
      */
     private fun queryAndOptions(element: PsiElement, regoPackage: RegoPackage?): Pair<String, String> {
-        if (element.parent.parent is RegoRuleHead) {
+        if (element.parent.parent is RegoHeadRef) {
             return Pair("data.${regoPackage?.ref?.text}.${element.text}", "")
         }
         return Pair("data.${regoPackage?.ref?.text}", "--metrics")
