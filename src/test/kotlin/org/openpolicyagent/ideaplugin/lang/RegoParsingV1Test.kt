@@ -44,7 +44,9 @@ class RegoParsingV1Test : ParsingTestCase(
         ensureNoErrorElements()
     }
 
-    fun `test dotted rule heads`() = doTestNoError()
+    fun `test general ref heads`() = doTestNoError()
     fun `test if body delimiter`() = doTestNoError()
     fun `test contains partial set`() = doTestNoError()
+    fun `test one line bodies`() = doTestNoError()
+    fun `test contains identifier uses`() = doTestNoError()
 }

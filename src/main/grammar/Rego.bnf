@@ -68,10 +68,10 @@
 module              ::= package (import|  rule)*
 package             ::= "package" ref
 import              ::= "import" ref ( "as" var )?
-rule                ::= "default"? ( partial-set-rule | rule-head "if"? rule-body* )
+rule                ::= "default"? ( partial-set-rule | rule-head "if" literal | rule-head "if"? rule-body* )
 rule-head           ::= head-ref ( "(" rule-args? ")" )? ("[" term "]" )* ( ( ":=" | "=" ) expr )?
 head-ref            ::= var ref-arg-dot*
-partial-set-rule    ::= head-ref "contains" term ( "if"? rule-body )?
+partial-set-rule    ::= head-ref "contains" term ( "if" literal | "if"? rule-body )?
 rule-args           ::= term ( "," term )*
 rule-body           ::= else-expr  | query-block
 else-expr           ::= else (':=' | '=') expr "if"? query-block? | else (':=' | '=')? "if"? query-block
