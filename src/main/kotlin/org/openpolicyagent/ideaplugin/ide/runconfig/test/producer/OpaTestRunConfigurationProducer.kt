@@ -41,7 +41,7 @@ class OpaTestRunConfigurationProducer : LazyRunConfigurationProducer<OpaTestRunC
         if (!regFile) return false
 
         val element = sourceElement.get()
-        if (element.parent.parent is RegoRuleHead && ! element.text.startsWith(REGO_TEST_RULE_PREFIX)) return false
+        if (element.parent.parent is RegoHeadRef && ! element.text.startsWith(REGO_TEST_RULE_PREFIX)) return false
         val regoPackage = element.getRegoPackage() ?: return false
 
 
@@ -56,7 +56,7 @@ class OpaTestRunConfigurationProducer : LazyRunConfigurationProducer<OpaTestRunC
      * matching the test names.
      */
     private fun getRunOption(element: PsiElement, regoPackage: RegoPackage?): String {
-        if (element.parent.parent is RegoRuleHead) {
+        if (element.parent.parent is RegoHeadRef) {
             return "-r data.${regoPackage?.ref?.text}.${element.text}"
         }
         return "-r data.${regoPackage?.ref?.text}"

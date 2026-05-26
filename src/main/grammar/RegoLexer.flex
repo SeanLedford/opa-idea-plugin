@@ -53,10 +53,12 @@ COMMENT=[ \t]*#[^\r\n]*
   "["                 { return LBRACK; }
   "]"                 { return RBRACK; }
   "else"              { return ELSE; }
+  "if"                { return IF; }
   "{"                 { return LBRACE; }
   "}"                 { return RBRACE; }
   ";"                 { return SEMICOLON; }
   "some"              { return SOME; }
+  "contains"          { return CONTAINS; }
   ","                 { return COMMA; }
   "."                 { return DOT; }
   "not"               { return NOT; }

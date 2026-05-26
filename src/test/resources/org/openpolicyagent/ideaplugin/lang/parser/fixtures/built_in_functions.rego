@@ -288,7 +288,7 @@ timeFunc {
 	layout:=""
 	duration:=""
 	ns:=5
-	tz:=5
+	tz:="UTC"
 	years:=5
 	months:=5
 	days:=5

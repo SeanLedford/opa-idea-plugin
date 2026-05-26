@@ -67,7 +67,7 @@ class OpaCommandRunLineMarker : RunLineMarkerContributor() {
                 { "eval or test package" })
         }
 
-        if (element.parent.parent is RegoRuleHead) {
+        if (element.parent.parent is RegoHeadRef) {
             val cmd = if (element.text.startsWith(REGO_TEST_RULE_PREFIX)) "test" else "eval"
             return Info(AllIcons.RunConfigurations.TestState.Run, ExecutorAction.getActions(1), { "$cmd rule" })
         }
