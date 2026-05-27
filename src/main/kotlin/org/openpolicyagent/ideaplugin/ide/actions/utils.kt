@@ -49,7 +49,7 @@ fun getPackageAsString(document: Document, project: Project): String {
     val file = document.virtualFile ?: return ""
     val fileView = PsiManager.getInstance(project).findViewProvider(file) ?: return ""
     val psiTree = fileView.getPsi(RegoLanguage)
-    val children = psiTree.children
+    val children = psiTree!!.children
     for (child in children) {
         if (child is RegoPackage) {
             return child.ref.text
@@ -65,7 +65,7 @@ fun getImportsAsString(document: Document, project: Project): MutableList<String
     val file = document.virtualFile ?: return mutableListOf<String>()
     val fileView = PsiManager.getInstance(project).findViewProvider(file) ?: return mutableListOf<String>()
     val psiTree = fileView.getPsi(RegoLanguage)
-    val children = psiTree.children
+    val children = psiTree!!.children
     var imports = mutableListOf<String>()
     for (child in children) {
         if (child is RegoImport) {

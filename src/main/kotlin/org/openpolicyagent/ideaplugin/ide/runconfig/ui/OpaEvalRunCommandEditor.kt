@@ -7,7 +7,6 @@ package org.openpolicyagent.ideaplugin.ide.runconfig.ui
 
 import com.intellij.execution.configuration.EnvironmentVariablesComponent
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
-import com.intellij.openapi.fileChooser.FileTypeDescriptor
 import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.ProjectRootManager
@@ -31,10 +30,10 @@ class OpaEvalRunCommandEditor(private val project: Project) : SettingsEditor<Opa
     private var input = TextFieldWithBrowseButton().apply {
         addBrowseFolderListener(
             TextBrowseFolderListener(
-                FileTypeDescriptor("opa input file", ".json")
+                FileChooserDescriptor(true, false, false, false, false, false)
+                    .withFileFilter { it.extension == "json" }
             )
         )
-
     }
     private var bundle = TextFieldWithBrowseButton().apply {
         addBrowseFolderListener(

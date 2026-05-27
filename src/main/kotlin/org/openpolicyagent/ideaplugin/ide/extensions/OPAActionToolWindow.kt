@@ -106,7 +106,7 @@ class OPAActionToolWindow {
 
                 //if the tool window currently has a console view with the same opa task
                 //in it, remove the old console before creating a new one
-                val existing = toolWindow.contentManager.findContent(title) ?: null
+                val existing = toolWindow.contentManager.findContent(title)
                 if (existing != null) {
                     toolWindow.contentManager.removeContent(existing, true)
                 }
@@ -131,7 +131,7 @@ class OPAActionToolWindow {
         val consoleContent = ContentImpl(consoleView.component, title, false)
 
         //the tool window shouldn't have two consoles with the sdame title (task)
-        val existing = toolWindow.contentManager.findContent(title) ?: null
+        val existing = toolWindow.contentManager.findContent(title)
         if (existing != null) {
             toolWindow.contentManager.removeContent(existing, true)
         }

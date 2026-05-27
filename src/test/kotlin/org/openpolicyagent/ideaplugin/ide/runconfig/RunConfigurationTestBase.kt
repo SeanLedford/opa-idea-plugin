@@ -9,8 +9,8 @@ import com.intellij.execution.ExecutionResult
 import com.intellij.execution.configuration.EnvironmentVariablesData
 import com.intellij.execution.configurations.RunConfiguration
 import com.intellij.execution.executors.DefaultRunExecutor
-import com.intellij.execution.process.ProcessAdapter
 import com.intellij.execution.process.ProcessEvent
+import com.intellij.execution.process.ProcessListener
 import com.intellij.execution.process.ProcessOutput
 import com.intellij.execution.process.ProcessOutputTypes
 import com.intellij.execution.runners.ExecutionEnvironmentBuilder
@@ -78,7 +78,7 @@ abstract class RunConfigurationTestBase : OpaWithRealProjectTestBase() {
 /**
  * this class has been borrowed from IntelliJ rust plugin
  */
-class AnsiAwareCapturingProcessAdapter : ProcessAdapter() {
+class AnsiAwareCapturingProcessAdapter : ProcessListener {
     val output = ProcessOutput()
 
     override fun onTextAvailable(event: ProcessEvent, outputType: Key<*>) =
@@ -87,7 +87,6 @@ class AnsiAwareCapturingProcessAdapter : ProcessAdapter() {
         } else {
             output.appendStdout(event.text)
         }
-
 
     override fun processTerminated(event: ProcessEvent) {
         output.exitCode = event.exitCode

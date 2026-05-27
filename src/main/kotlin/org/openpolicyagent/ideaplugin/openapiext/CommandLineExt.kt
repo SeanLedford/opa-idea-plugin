@@ -13,7 +13,8 @@ import com.intellij.execution.process.CapturingProcessHandler
 import com.intellij.execution.process.ProcessListener
 import com.intellij.execution.process.ProcessOutput
 import com.intellij.openapi.Disposable
-import com.intellij.openapi.application.runReadAction
+import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.util.Computable
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.ProgressManager
@@ -61,14 +62,14 @@ fun GeneralCommandLine.execute(
         handler.destroyProcess()
     }
 
-    val alreadyDisposed = runReadAction {
+    val alreadyDisposed = ApplicationManager.getApplication().runReadAction(Computable {
         try {
             Disposer.register(owner, cargoKiller)
             false
         } catch (e: IncorrectOperationException) {
             true
         }
-    }
+    })
 
     if (alreadyDisposed) {
         // On the one hand, this seems fishy,

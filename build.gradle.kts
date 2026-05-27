@@ -40,7 +40,7 @@ idea {
 
 plugins {
     idea
-    kotlin("jvm") version "2.1.20"
+    kotlin("jvm") version "2.3.20"
     id("org.jetbrains.intellij.platform.module") version "2.16.0"
     id("org.jetbrains.grammarkit") version "2022.3.2.2"
 
@@ -65,6 +65,7 @@ allprojects {
         all {
             resolutionStrategy.sortArtifacts(ResolutionStrategy.SortOrder.DEPENDENCY_FIRST)
         }
+        create("grammarKitClasspath")
     }
 
     dependencies {
@@ -74,7 +75,7 @@ allprojects {
             exclude("org.jetbrains.kotlin")
         }
         testImplementation("org.assertj:assertj-core:3.24.2")
-        implementation("it.unimi.dsi:fastutil:8.5.12")
+        "grammarKitClasspath"("it.unimi.dsi:fastutil:8.5.12")
 
         intellijPlatform {
             create(platformType, platformVersion)
@@ -206,9 +207,10 @@ project(":") {
         purgeOldFiles.set(true)
     }
 
-    // Ensure fastutil is available for grammar-kit tasks
+    // fastutil is needed by GrammarKit but must not be in implementation — it conflicts with the
+    // platform's bundled version at test runtime, causing NoSuchMethodError in every test.
     tasks.withType<GenerateParserTask> {
-        classpath = configurations.compileClasspath.get()
+        classpath = configurations.compileClasspath.get() + configurations["grammarKitClasspath"]
     }
 
     tasks.withType<KotlinCompile> {
@@ -216,6 +218,11 @@ project(":") {
             generateRegoLexer,
             generateRegoParser
         )
+        compilerOptions {
+            // prevents Kotlin from generating bridge stubs for interface default methods,
+            // which the plugin verifier flags as deprecated API overrides
+            freeCompilerArgs.add("-jvm-default=no-compatibility")
+        }
     }
 }
 
