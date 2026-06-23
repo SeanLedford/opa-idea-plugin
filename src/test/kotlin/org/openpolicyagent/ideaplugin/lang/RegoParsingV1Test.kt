@@ -49,4 +49,7 @@ class RegoParsingV1Test : ParsingTestCase(
     fun `test contains partial set`() = doTestNoError()
     fun `test one line bodies`() = doTestNoError()
     fun `test contains identifier uses`() = doTestNoError()
+    fun `test every expressions`() = doTestNoError()
+    fun `test in operator`() = doTestNoError()
+    fun `test some in`() = doTestNoError()
 }
