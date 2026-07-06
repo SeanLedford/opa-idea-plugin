@@ -52,4 +52,5 @@ class RegoParsingV1Test : ParsingTestCase(
     fun `test every expressions`() = doTestNoError()
     fun `test in operator`() = doTestNoError()
     fun `test some in`() = doTestNoError()
+    fun `test keywords as identifiers`() = doTestNoError()
 }

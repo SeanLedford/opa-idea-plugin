@@ -79,9 +79,10 @@ rule-body           ::= else-expr  | query-block
 else-expr           ::= else (':=' | '=') expr "if"? query-block? | else (':=' | '=')? "if"? query-block
 query-block         ::= "{" query "}"
 query               ::= ( literal |';' )+
-literal             ::= ( every-decl | some-decl | literal-expr | "not" literal-expr )  with-modifier*
+literal             ::= ( every-decl | some-in-decl | some-decl | literal-expr | "not" literal-expr )  with-modifier*
 with-modifier       ::= "with" term "as" term
-some-decl           ::= "some" var ( "," var )* ( "in" expr )?
+some-in-decl        ::= "some" var ( "," var )? "in" expr
+some-decl           ::= "some" var ( "," var )*
 every-decl          ::= "every" var ( "," var )? "in" expr query-block
 literal-expr        ::= expr  ((':=' | '=') expr)?
 expr                ::= expr-infix | (expr-call ref-arg*)  | term
@@ -101,7 +102,7 @@ ref                 ::= ( expr-call  | array | object | set | array-compr | obje
 ref-arg             ::= ref-arg-dot | ref-arg-brack
 ref-arg-brack       ::= "[" ( expr | "_" ) "]"
 ref-arg-dot         ::= "." var
-var                 ::= ASCII_LETTER | "contains" | "in"
+var                 ::= ASCII_LETTER | "contains" | "in" | "every" | "if"
 scalar              ::= string | NUMBER | TRUE | FALSE | NULL
 string              ::= STRING_TOKEN| RAW_STRING
 array               ::= '[' expr? ( ',' expr )* ','? ']'
